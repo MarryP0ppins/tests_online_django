@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Доступные тесты{% endblock %}
+
+{% block content %}
+<ul>
+    {% for test in data.tests %}
+       {% include 'test_element.html' with element=test %}
+    {% empty %}
+        <li>Список пуст</li>
+    {% endfor %}
+</ul>
+{% endblock %}

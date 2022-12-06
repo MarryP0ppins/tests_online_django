@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ data.test.title }}{% endblock %}
+
+{% block content %}
+    <div>Тест: {{ data.test.title }}</div>
+    {% for test_question in data.test_questions %}
+        {% if test_question.id_test.id_test == data.id_test %}
+            {% for question in data.questions %}
+                {% if question.id_question == test_question.id_question.id_question %}
+                    <div>{{ question.question }}</div>
+                    <ul>
+                    {% for question_answer in data.question_answers %}
+                        {% if question_answer.id_question.id_question == question.id_question %}
+                            {% for answer in data.answers %}
+                                {% if answer.id_answer == question_answer.id_answer.id_answer %}
+                                    <li>{{ answer.value }}</li>
+                                {% endif %}
+                            {% empty %}
+                                <li>Для этого вопроса еще нет ответов</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% empty %}
+                        <li>Для этого вопроса еще нет ответов</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% empty %}
+                <li>В этом тесте еще нет вопросов</li>
+            {% endfor %}
+       {% endif %}
+
+    {% empty %}
+        <li>В этом тесте еще нет вопросов</li>
+    {% endfor %}
+    <form action="{% url 'delete_test' id=data.id_test %}">
+        <button type="submit" class="btn">
+            Удалить тест - {{ data.test.title }}
+        </button>
+    </form>
+{% endblock %}
