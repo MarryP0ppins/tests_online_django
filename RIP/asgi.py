@@ -1,5 +1,5 @@
 """
-ASGI config for RIP project.
+ASGI config for tests_online_django project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RIP.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tests_online_django.settings')
 
 application = get_asgi_application()
