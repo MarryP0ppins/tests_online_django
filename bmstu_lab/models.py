@@ -127,8 +127,7 @@ class DjangoSession(models.Model):
 class Question(models.Model):
     id_question = models.AutoField(primary_key=True)
     question = models.CharField(max_length=45)
-    type = models.CharField(max_length=8)
-    right_answer = models.ForeignKey(Answer, models.DO_NOTHING, db_column='right_answer')
+    right_answer = models.ForeignKey(Answer, on_delete=models.CASCADE, db_column='right_answer')
 
     class Meta:
         managed = False
@@ -137,8 +136,8 @@ class Question(models.Model):
 
 class QuestionAnswer(models.Model):
     id_questionanswer = models.AutoField(primary_key=True)
-    id_answer = models.ForeignKey(Answer, models.DO_NOTHING, db_column='id_answer')
-    id_question = models.ForeignKey(Question, models.DO_NOTHING, db_column='id_question')
+    id_answer = models.ForeignKey(Answer, on_delete=models.CASCADE, db_column='id_answer')
+    id_question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='id_question')
 
     class Meta:
         managed = False
@@ -149,7 +148,6 @@ class QuestionAnswer(models.Model):
 class Test(models.Model):
     id_test = models.AutoField(primary_key=True)
     title = models.CharField(max_length=45)
-    total_questions = models.IntegerField()
     description = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -159,8 +157,8 @@ class Test(models.Model):
 
 class TestQuestion(models.Model):
     id_testquestion = models.AutoField(primary_key=True)
-    id_question = models.ForeignKey(Question, models.DO_NOTHING, db_column='id_question')
-    id_test = models.ForeignKey(Test, models.DO_NOTHING, db_column='id_test')
+    id_question = models.ForeignKey(Question, on_delete=models.CASCADE, db_column='id_question')
+    id_test = models.ForeignKey(Test,on_delete=models.CASCADE, db_column='id_test')
 
     class Meta:
         managed = False
@@ -170,12 +168,13 @@ class TestQuestion(models.Model):
 
 class TestResult(models.Model):
     id_test_result = models.AutoField(primary_key=True)
-    id_user = models.ForeignKey('User', models.DO_NOTHING, db_column='id_user')
-    id_test = models.ForeignKey(Test, models.DO_NOTHING, db_column='id_test')
-    right_answer = models.IntegerField()
-    date_pass = models.DateTimeField()
-    test_pass = models.IntegerField()
-    description = models.CharField(max_length=255, blank=True, null=True)
+    id_user = models.ForeignKey('User', on_delete=models.CASCADE, db_column='id_user')
+    id_test = models.ForeignKey(Test, on_delete=models.CASCADE, db_column='id_test')
+    status = models.CharField(max_length=12)
+    date_start = models.DateTimeField()
+    right_answer = models.FloatField()
+    result_comment = models.CharField(max_length=255, blank=True, null=True)
+    date_complete = models.DateTimeField()
 
     class Meta:
         managed = False
